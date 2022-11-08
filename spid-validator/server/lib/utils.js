@@ -179,6 +179,9 @@ class Utils {
     }
 
     static btoa(text) {
+        if (text === undefined) {
+            text = ''
+        }
         return Buffer.from(text).toString('base64');
     }
 
