@@ -9,7 +9,7 @@ const config_idp = require("../../config/idp.json");
 const config_dir = require("../../config/dir.json");
 
 const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
-const host = (process.env.HOSTNAME) ? process.env.HOSTNAME : config_server.host;
+const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
 
 module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutResponse) {
 

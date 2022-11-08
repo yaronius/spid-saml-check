@@ -20,7 +20,7 @@ const spid_users = require("../../config/spid_users.json");
 //const demo_basepath = config_demo.basepath=='/'? '':config_demo.basepath;
 //const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 
-const host = (process.env.HOSTNAME) ? process.env.HOSTNAME : config_server.host;
+const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
 const demo_basepath = config_demo.basepath;
 const validator_basepath = config_idp.basepath;
 
