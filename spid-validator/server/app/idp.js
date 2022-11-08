@@ -10,6 +10,7 @@ const config_dir = require("../../config/dir.json");
 
 const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const useProxy = (process.env.USE_PROXY) ? process.env.USE_PROXY === "true" : config_server.useProxy
 
 module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutResponse) {
 
@@ -32,7 +33,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
         let config = config_idp;
 
         let endpoint = host
-            + (config_server.useProxy? '' : ":" + config_server.port)
+            + (useProxy? '' : ":" + config_server.port)
             + validator_basepath + "/samlsso";
 
         config.endpoints = {

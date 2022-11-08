@@ -21,6 +21,7 @@ const spid_users = require("../../config/spid_users.json");
 //const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 
 const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const useProxy = (process.env.USE_PROXY) ? process.env.USE_PROXY === "true" : config_server.useProxy
 const demo_basepath = config_demo.basepath;
 const validator_basepath = config_idp.basepath;
 
@@ -31,7 +32,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
         let config = config_demo;
 
         let endpoint = host
-            + (config_server.useProxy? '' : ":" + config_server.port)
+            + (useProxy? '' : ":" + config_server.port)
             + demo_basepath + "/samlsso";
 
         config.endpoints = {
