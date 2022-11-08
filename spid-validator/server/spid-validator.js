@@ -29,7 +29,7 @@ const Authenticator = require("./lib/authenticator");
 const { config } = require("process");
 const os = require('os');
 
-const useHttps = config_server.useHttps;
+const useHttps = (process.env.USE_HTTPS) ? process.env.USE_HTTPS === "true" : config_server.useHttps;
 const httpPort = (process.env.NODE_HTTPS_PORT) ? process.env.NODE_HTTPS_PORT : config_server.port;
 
 let https;
