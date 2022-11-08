@@ -9,6 +9,7 @@ const config_idp = require("../../config/idp.json");
 const config_dir = require("../../config/dir.json");
 
 const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
+const host = (process.env.HOSTNAME) ? process.env.HOSTNAME : config_server.host;
 
 module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutResponse) {
 
@@ -30,7 +31,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
     app.get(validator_basepath + "/metadata.xml", function (req, res) {
         let config = config_idp;
 
-        let endpoint = config_server.host
+        let endpoint = host
             + (config_server.useProxy? '' : ":" + config_server.port)
             + validator_basepath + "/samlsso";
 
@@ -191,7 +192,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                 
                     req.session.metadata = null;          
 
-                    let fileContent = config_server.host + "?SAMLRequest=" + encodeURIComponent(req.session.request.samlRequest) + 
+                    let fileContent = host + "?SAMLRequest=" + encodeURIComponent(req.session.request.samlRequest) +
                                         "&RelayState=" + encodeURIComponent(req.session.request.relayState) + 
                                         "&SigAlg=" + encodeURIComponent(req.session.request.sigAlg) + 
                                         "&Signature=" + encodeURIComponent(req.session.request.signature);

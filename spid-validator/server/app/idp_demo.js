@@ -20,6 +20,7 @@ const spid_users = require("../../config/spid_users.json");
 //const demo_basepath = config_demo.basepath=='/'? '':config_demo.basepath;
 //const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 
+const host = (process.env.HOSTNAME) ? process.env.HOSTNAME : config_server.host;
 const demo_basepath = config_demo.basepath;
 const validator_basepath = config_idp.basepath;
 
@@ -29,7 +30,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
     app.get(demo_basepath + "/metadata.xml", function (req, res) {
         let config = config_demo;
 
-        let endpoint = config_server.host
+        let endpoint = host
             + (config_server.useProxy? '' : ":" + config_server.port)
             + demo_basepath + "/samlsso";
 
@@ -247,7 +248,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
 
                 let fileContent;
                 if(binding=="HTTP-Redirect") {
-                    fileContent = config_server.host + "?SAMLRequest=" + encodeURIComponent(samlRequest) + 
+                    fileContent = host + "?SAMLRequest=" + encodeURIComponent(samlRequest) +
                         "&RelayState=" + encodeURIComponent(relayState) + 
                         "&SigAlg=" + encodeURIComponent(sigAlg) + 
                         "&Signature=" + encodeURIComponent(signature);
