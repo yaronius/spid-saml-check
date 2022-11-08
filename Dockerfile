@@ -62,10 +62,11 @@ ENV TZ=Europe/Rome
 ENV NODE_HTTPS_PORT=${EXPOSE_HTTPS_PORT}
 
 # Build validator
-RUN cd /spid-saml-check/spid-validator && \
-    cd client && npm install --silent && cd .. && \
-    cd server && npm install --silent && cd .. && \
-    npm run build
+RUN cd /spid-saml-check/spid-validator/client && npm install --silent
+
+RUN cd /spid-saml-check/spid-validator/server && npm install --silent
+
+RUN cd /spid-saml-check/spid-validator && npm run build
 
 # Ports exposed
 EXPOSE ${EXPOSE_HTTPS_PORT}
