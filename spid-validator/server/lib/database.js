@@ -120,7 +120,13 @@ class Database {
             this.db.prepare(sql2).run(...sql2_values);
 
         } catch(exception) {
-            utility.log("DATABASE EXCEPTION (saveStore)", exception.toString());
+            utility.log("DATABASE EXCEPTION (saveStore)", exception.toString() + "\nSQL values: "+JSON.stringify({
+                "user": user,
+                "organization": organization,
+                "entity_id": entity_id,
+                "external_code": external_code,
+                "store_type": store_type,
+            }));
             throw(exception);
         } 
     }
