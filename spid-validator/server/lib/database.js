@@ -106,7 +106,10 @@ class Database {
                 sql2 += "external_code=?, ";
                 sql2_values.push(external_code);
             }
-            if(organization!=null && organization!=='' && organization!==false) {
+            if (organization===false) {
+                organization=null
+            }
+            if(organization!=null && organization!=='') {
                 sql2 += "organization=?, ";
                 sql2_values.push(organization);
             } 
