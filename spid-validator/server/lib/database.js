@@ -102,11 +102,11 @@ class Database {
             let storeSerialized = JSON.stringify(store);
 
             let sql2_values = [];
-            if(external_code!=null && external_code!='') {
+            if(external_code!=null && external_code!=='') {
                 sql2 += "external_code=?, ";
                 sql2_values.push(external_code);
             }
-            if(organization!=null && organization!='') {
+            if(organization!=null && organization!=='' && organization!==false) {
                 sql2 += "organization=?, ";
                 sql2_values.push(organization);
             } 
