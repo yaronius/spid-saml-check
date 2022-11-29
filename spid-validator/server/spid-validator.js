@@ -31,7 +31,7 @@ const os = require('os');
 
 const useHttps = (process.env.USE_HTTPS) ? process.env.USE_HTTPS === "true" : config_server.useHttps;
 const httpPort = (process.env.NODE_HTTPS_PORT) ? process.env.NODE_HTTPS_PORT : config_server.port;
-const entityID = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_idp.entityID;
 
 let https;
 let httpsPrivateKey;

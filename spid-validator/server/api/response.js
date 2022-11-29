@@ -7,9 +7,7 @@ const Signer = require("../lib/signer").Signer;
 const SIGN_MODE = require("../lib/signer").SIGN_MODE;
 const config_test = require("../../config/test.json");
 const config_idp = require("../../config/idp.json");
-const config_dir = require("../../config/dir.json");
-const config_server = require("../../config/server.json");
-const entityID = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_idp.entityID;
 
 
 module.exports = function(app, checkAuthorisation) {
