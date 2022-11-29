@@ -10,6 +10,7 @@ const config_dir = require("../../config/dir.json");
 
 const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_idp.entityID;
 const useProxy = (process.env.USE_PROXY) ? process.env.USE_PROXY === "true" : config_server.useProxy
 
 module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutResponse) {
@@ -40,7 +41,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
             "login": endpoint,
             "logout": endpoint,
         }
-        config.entityID = host
+        config.entityID = entityID
 
         let idp = new IdP(config);
         res.set('Content-Type', 'text/xml');
@@ -194,7 +195,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                 
                     req.session.metadata = null;          
 
-                    let fileContent = host + "?SAMLRequest=" + encodeURIComponent(req.session.request.samlRequest) +
+                    let fileContent = entityID + "?SAMLRequest=" + encodeURIComponent(req.session.request.samlRequest) +
                                         "&RelayState=" + encodeURIComponent(req.session.request.relayState) + 
                                         "&SigAlg=" + encodeURIComponent(req.session.request.sigAlg) + 
                                         "&Signature=" + encodeURIComponent(req.session.request.signature);

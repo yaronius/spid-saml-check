@@ -21,6 +21,7 @@ const spid_users = require("../../config/spid_users.json");
 //const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 
 const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
+const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_idp.entityID;
 const useProxy = (process.env.USE_PROXY) ? process.env.USE_PROXY === "true" : config_server.useProxy
 const demo_basepath = config_demo.basepath;
 const validator_basepath = config_idp.basepath;
@@ -39,7 +40,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
             "login": endpoint,
             "logout": endpoint,
         }
-        config.entityID = host + "/demo"
+        config.entityID = entityID
 
         let idp = new IdP(config_demo);
         res.set('Content-Type', 'text/xml');
@@ -250,7 +251,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
 
                 let fileContent;
                 if(binding=="HTTP-Redirect") {
-                    fileContent = host + "?SAMLRequest=" + encodeURIComponent(samlRequest) +
+                    fileContent = entityID + "?SAMLRequest=" + encodeURIComponent(samlRequest) +
                         "&RelayState=" + encodeURIComponent(relayState) + 
                         "&SigAlg=" + encodeURIComponent(sigAlg) + 
                         "&Signature=" + encodeURIComponent(signature);
