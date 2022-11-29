@@ -31,6 +31,7 @@ const os = require('os');
 
 const useHttps = (process.env.USE_HTTPS) ? process.env.USE_HTTPS === "true" : config_server.useHttps;
 const httpPort = (process.env.NODE_HTTPS_PORT) ? process.env.NODE_HTTPS_PORT : config_server.port;
+const entityID = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
 
 let https;
 let httpsPrivateKey;
@@ -156,8 +157,8 @@ var sendLogoutResponse = function(req, res) {
         defaults = Utility.defaultParam(defaults, "IssueInstant", Utility.getInstant());
         defaults = Utility.defaultParam(defaults, "Destination", singleLogoutServiceURL[0]);
         defaults = Utility.defaultParam(defaults, "AuthnRequestID", authnRequestID);
-        defaults = Utility.defaultParam(defaults, "NameQualifier", config_idp.entityID);
-        defaults = Utility.defaultParam(defaults, "Issuer", config_idp.entityID);
+        defaults = Utility.defaultParam(defaults, "NameQualifier", entityID);
+        defaults = Utility.defaultParam(defaults, "Issuer", entityID);
 
         let testSuite = new TestSuite(config_idp, config_test);
         let logoutResponse = testSuite.getTestTemplate("test-logout", "1", requestedAttributes, defaults, []);

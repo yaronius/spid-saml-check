@@ -8,6 +8,8 @@ const SIGN_MODE = require("../lib/signer").SIGN_MODE;
 const config_test = require("../../config/test.json");
 const config_idp = require("../../config/idp.json");
 const config_dir = require("../../config/dir.json");
+const config_server = require("../../config/server.json");
+const entityID = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
 
 
 module.exports = function(app, checkAuthorisation) {
@@ -78,14 +80,14 @@ module.exports = function(app, checkAuthorisation) {
     
             // defaults 
             let defaults = params.slice(0); // clone array
-            defaults = Utility.defaultParam(defaults, "Issuer", config_idp.entityID);
+            defaults = Utility.defaultParam(defaults, "Issuer", entityID);
             defaults = Utility.defaultParam(defaults, "AuthnRequestID", authnRequestID);
             defaults = Utility.defaultParam(defaults, "ResponseID", Utility.getUUID());
             defaults = Utility.defaultParam(defaults, "IssueInstant", Utility.getInstant());
             defaults = Utility.defaultParam(defaults, "IssueInstantMillis", Utility.getInstantMillis());
             defaults = Utility.defaultParam(defaults, "AssertionID", Utility.getUUID());
             defaults = Utility.defaultParam(defaults, "NameID", Utility.getUUID());
-            defaults = Utility.defaultParam(defaults, "NameIDNameQualifier", config_idp.entityID);
+            defaults = Utility.defaultParam(defaults, "NameIDNameQualifier", entityID);
             defaults = Utility.defaultParam(defaults, "AuthnIstant", Utility.getInstant());
             defaults = Utility.defaultParam(defaults, "NotBefore", Utility.getNotBefore(issueInstant));
             defaults = Utility.defaultParam(defaults, "NotOnOrAfter", Utility.getNotOnOrAfter(issueInstant));
