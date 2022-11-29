@@ -40,6 +40,7 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
             "login": endpoint,
             "logout": endpoint,
         }
+        config.entityID = host
 
         let idp = new IdP(config);
         res.set('Content-Type', 'text/xml');
