@@ -21,7 +21,7 @@ const spid_users = require("../../config/spid_users.json");
 //const validator_basepath = config_idp.basepath=='/'? '':config_idp.basepath;
 
 const host = (process.env.APP_HOST) ? process.env.APP_HOST : config_server.host;
-const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_idp.entityID;
+const entityID = (process.env.ENTITY_ID) ? process.env.ENTITY_ID : config_demo.entityID;
 const useProxy = (process.env.USE_PROXY) ? process.env.USE_PROXY === "true" : config_server.useProxy
 const demo_basepath = config_demo.basepath;
 const validator_basepath = config_idp.basepath;
