@@ -327,8 +327,9 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                     let purpose = requestParser.Purpose();
                     
                     // Check and retrieve Age Limits
-                    let minAge = requestParser.MinAge();
-                    let maxAge = requestParser.MaxAge();
+                    // TODO: da correggere rispetto a LL.GG. minori pubblicate, minAge e maxAge sono nel metadata
+                    //let minAge = requestParser.MinAge();
+                    //let maxAge = requestParser.MaxAge();
 
                     res.render("demo_login.handlebars", {
                         demo_basepath: demo_basepath,
@@ -341,8 +342,8 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                             sigAlg: sigAlg,
                             signature: signature,
                             purpose: purpose,
-                            minAge: minAge,
-                            maxAge: maxAge
+                            minAge: null, //minAge,
+                            maxAge: null //maxAge
                         },
                         retry: -1,
                         timeout: config_demo.loginTimeout
@@ -441,6 +442,8 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                 }
 
                 // check Min/Max Age
+                // TODO: da correggere rispetto a LL.GG. minori pubblicate, minAge e maxAge sono nel metadata
+                /*
                 {
                     let userAge = nowDate.diff(birthDate, 'years');
                     Utility.log("USER Age: " + userAge);
@@ -458,12 +461,12 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
                     if(maxAge && userAge > maxAge) {
                         return {result: false, data: ageErrorMessage};
                     }
-
-                    if(!user.purposeIDType) user.purposeIDType = 1;
                 }
+                */
 
                 // check Professional Use
                 {
+                    if(!user.purposeIDType) user.purposeIDType = 1;
                     Utility.log("User ID Type: " + user.purposeIDType);
                     Utility.log("Purpose: " + purpose);
                     let purposeErrorMessage = "L'identità digitale (Tipo " + user.purposeIDType + 
@@ -648,6 +651,12 @@ module.exports = function(app, checkAuthorisation, getEntityDir, sendLogoutRespo
         if((assertionConsumerURL==null || assertionConsumerURL=="") &&
             (assertionConsumerIndex!=null && assertionConsumerIndex!="")) {
             assertionConsumerURL = metadataParser.getAssertionConsumerServiceURL(assertionConsumerIndex);
+        }
+
+        // if no valid AssertionConsumerURL return error
+        let existsAssertionConsumerServiceURL = metadataParser.existsAssertionConsumerServiceURL(assertionConsumerURL); 
+        if(!existsAssertionConsumerServiceURL) {
+            return res.status(400).send("AssertionConsumerServiceURL not valid");
         }
 
         // defaults 
